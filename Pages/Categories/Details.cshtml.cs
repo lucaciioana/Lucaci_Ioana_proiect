@@ -28,7 +28,10 @@ namespace Lucaci_Ioana_ProiectFinal.Pages.Categories
                 return NotFound();
             }
 
-            Category = await _context.Category.FirstOrDefaultAsync(m => m.ID == id);
+            Category = await _context.Category
+                .Include(a => a.Articles)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.ID == id);
 
             if (Category == null)
             {
